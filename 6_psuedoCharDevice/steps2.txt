@@ -1,0 +1,44 @@
+# make a file main.c and Makefile
+
+
+#Run make file using CROSSCOMPILE
+make -C /home/praveen/DeviceDrivers/outTree/linux-6.1.4/ M=${PWD} ARCH=arm \ CROSS_COMPILE=arm-linux-gnueabi- modules
+
+# make a directory called rootfs in /mnt
+
+# mount rootfs.img (acts as sd card) to /mnt/rootfs
+sudo mount -o loop,rw,sync rootfs.img /mnt/rootfs
+sudo cp main.ko /mnt/rootfs/home/root/
+sudo umount /mnt/rootfs 
+
+# copy .dtb, and zImage to outTree folder
+
+# Run the Target machine(Qemu)
+qemu-system-arm -M vexpress-a9 -m 1024 -nographic -kernel zImage -dtb vexpress-v2p-ca9.dtb -sd rootfs.img -append "console=ttyAMA0 root=/dev/mmcblk0 rw"
+
+# now ls to check weather .ko file is there or not in target machine
+
+#now to clear kernal messages
+dmesg -c
+
+#now to load module
+insmod main.ko
+
+#now to create a node called pseudo
+mknod /dev/pseudo c 248 0
+
+#now to get the log details of created node
+cat /dev/pseudo 
+
+#now to remove module
+rmmod main.ko
+
+#now to get mod info run modinfo from outTree
+modinfo main.ko
+
+
+#all the nodes will be stored in /dev
+ ls /dev
+
+# To send something to the node
+echo "Hello World" > /dev/pseudo

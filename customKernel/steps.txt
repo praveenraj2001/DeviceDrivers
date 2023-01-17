@@ -9,7 +9,7 @@ sudo apt install gcc-arm-linux-gnueabi
 wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.4.tar.xz
 #For Unzipping the file
 tar xvf ../customKernel/linux-6.1.4.tar.xz
-make ARCH=arm vexpress_defconfig
+make ARCH=arm vexpress_defconfig #from here do it in linux-6.1.4 folder
 make ARCH=arm menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 cp linux-6.1.4/arch/arm/boot/zImage /home/praveen/DeviceDrivers/customKernel

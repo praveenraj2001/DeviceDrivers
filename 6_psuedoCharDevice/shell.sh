@@ -22,7 +22,7 @@ qemu-system-arm -M vexpress-a9 -m 1024 -nographic -kernel zImage -dtb vexpress-v
 echo dmesg -c
 
 #now to load module
-echo insmod main.ko ndevice=20
+echo insmod main.ko
 
 #now to check all the inserted modules
 lsmod
